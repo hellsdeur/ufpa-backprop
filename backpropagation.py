@@ -1,5 +1,6 @@
 from random import random
 from random import seed
+import matplotlib.pyplot as plt
 import math
 
 # inicializando rede com pesos aleatórios
@@ -77,7 +78,10 @@ def atualizar_pesos(rede, datarow, taxa_apre):
             
 # treino da rede
 def treinar_rede(rede, treino, taxa_apre, n_epoca, n_out):
+    vetor_de_erros = []
+    vetor_de_epocas = []
     for epoca in range(n_epoca): # sgd para um numero de epocas
+        vetor_de_epocas.append(epoca)
         sum_erro = 0
         for datarow in treino: # feedforward, backprop e atualiza os pesos
             saidas = feedforward(rede, datarow)
@@ -86,10 +90,14 @@ def treinar_rede(rede, treino, taxa_apre, n_epoca, n_out):
             sum_erro += sum([(esperado[i] - saidas[i])**2 for i in range(len(esperado))])
             back_prop(rede, esperado)
             atualizar_pesos(rede, datarow, taxa_apre)
-        if epoca < 10:
-            print('ÉPOCA = %d,  TAXA_APRE = %.3f, ERRO = %.3f' % (epoca, taxa_apre, sum_erro))
-        else:
-            print('ÉPOCA = %d, TAXA_APRE = %.3f, ERRO = %.3f' % (epoca, taxa_apre, sum_erro))
+        vetor_de_erros.append(sum_erro)
+        print('ÉPOCA = %d, TAXA_APRE = %.3f, ERRO = %.3f' % (epoca, taxa_apre, sum_erro))
+    fig, ax = plt.subplots()
+    plt.grid()
+    plt.title('Evolução do MSR ao longo das épocas')
+    plt.ylabel('Erro Médio Quadrático')
+    plt.xlabel('Épocas')
+    ax.plot(vetor_de_epocas, vetor_de_erros, color='red')
         
 # predição
 def predicao(rede, datarow):
@@ -401,4 +409,4 @@ n_hid = int(input('Numero de neuronios na camada escondida: '))
 taxa_apre = float(input('Taxa de aprendizado: '))
 epocas = int(input('Numero de epocas: '))
 
-rodar_rede(dataset[0:834], n_hid, taxa_apre, epocas)
+rodar_rede(dataset[0:50], n_hid, taxa_apre, epocas)

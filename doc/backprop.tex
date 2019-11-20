@@ -3,7 +3,34 @@
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
 \usepackage{booktabs}
-
+\usepackage{listings}
+\usepackage{xcolor}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
 
 \begin{document}
 
@@ -18,23 +45,33 @@
 	{\Large Helder Mateus dos Reis Matos\par}
 	\vfill
 	Dra. Adriana Rosa Garcez Castro
-
 	\vfill
-
 	{\large \today\par}
 \end{titlepage}
 
 \tableofcontents
 
 \section{Introdução}
+
 \section{Estrutura de uma Rede Neural Artificial}
+
 \section{Backpropagation}
+
 \section{Implementação}
+A rede foi organizada em uma lista de três camadas, uma de entrada, uma escondida de e uma de saída, e cada camada é estruturada como um dicionário que, inicialmente, guarda os pesos sinápticos dos neurônios. Durante as fases de alimentação adiante e retropropagação, esse léxico recebe valores de saída da rede e de ajuste de pesos (regra delta).
+
 \subsection{Inicializando pesos}
+Os pesos são valores aleatórios uniformemente distribuídos, entre 0 e 1. O número de entradas de cada neurônio da camada escondida é equivalente à quantidade de neurônios na camada de entrada mais um bias, assim como o número de entradas de cada neurônio da camada de saída é equivalente à quantidade de neurônios na camada de entrada mais um bias.
+\lstinputlisting[language=Python, firstline=4, lastline=17]{backpropagation.py}
+
 \subsection{Feedforward (Alimentação Adiante)}
+
 \subsection{Backpropagation (Retropropagação)}
+
 \subsection{Treino}
+
 \subsection{Validação}
+
 \section{Aplicação}
 \subsection{Escolha e tratamento do Dataset}
 \subsection{Aplicação na Rede Neural}

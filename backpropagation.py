@@ -2,8 +2,9 @@ from random import random
 from random import seed
 import matplotlib.pyplot as plt
 import math
+import pandas as pd
 
-# inicializando rede com pesos aleatórios
+# inicializando rede com pesos aleatorios
 def inicializar_rede(n_inp, n_hid, n_out):
     rede = []
     
@@ -15,17 +16,17 @@ def inicializar_rede(n_inp, n_hid, n_out):
     camada_out = [{'pesos': [random() for i in range(n_hid + 1)]} for i in range(n_out)]
     rede.append(camada_out)
     
-    # a rede é um array de camadas, e cada camada um dicionario
+    # a rede eh um array de camadas, e cada camada um dicionario
     return rede
 
-# calcular ativação do neuronio para uma entrada
+# calcular ativacao do neuronio para uma entrada
 def ativacao(pesos, entradas):
     ativacao = pesos[-1] # adiciona o bias
     for i in range(len(pesos) - 1): # soma ponderada das entradas
         ativacao += pesos[i] * entradas[i]
     return ativacao
 
-# função de ativação: sigmóide
+# funcao de ativacao: sigmoide
 def transferencia(ativacao):
     return 1.0 / (1.0 + math.exp(-ativacao))
 
@@ -41,17 +42,17 @@ def feedforward(rede, datarow):
         entradas = prox_entrada # para proxima camada
     return entradas # vetor com a saida da camada de saida
 
-# calcular inclinação da saida
+# calcular inclinacao da saida
 def derivada(saida):
     return saida * (1.0 - saida)
 
 # calcula o erro para cada camada e retropropaga
 def back_prop(rede, esperado):
-    # calculando o erro de trás pra frente
+    # calculando o erro de tras pra frente
     for i in reversed(range(len(rede))):
         camada = rede[i]
         erros = []
-        if i != len(rede) - 1: # se não for a ultima camada
+        if i != len(rede) - 1: # se nao for a ultima camada
             for j in range(len(camada)):
                 erro = 0.0
                 for neuronio in rede[i + 1]: # erro = peso * erro da saida
@@ -91,16 +92,15 @@ def treinar_rede(rede, treino, taxa_apre, n_epoca, n_out):
             back_prop(rede, esperado)
             atualizar_pesos(rede, datarow, taxa_apre)
         vetor_de_erros.append(sum_erro)
-        print('ÉPOCA = %d, TAXA_APRE = %.3f, ERRO = %.3f' % (epoca, taxa_apre, sum_erro))
+        print('EPOCA = %d, TAXA_APRE = %.3f, ERRO = %.3f' % (epoca, taxa_apre, sum_erro))
     fig, ax = plt.subplots()
     plt.grid()
-    plt.title('Evolução do MSR ao longo das épocas')
-    plt.ylabel('Erro Médio Quadrático')
-    plt.xlabel('Épocas')
+    plt.title('Evolucao do MSE ao longo das epocas')
+    plt.ylabel('Erro Medio Quadratico')
+    plt.xlabel('Epocas')
     ax.plot(vetor_de_epocas, vetor_de_erros, color='red')
         
-# predição
-def predicao(rede, datarow):
+def validacao(rede, datarow):
     saidas = feedforward(rede, datarow)
     return saidas.index(max(saidas)) # em saidas, retorna o valor maximo para a classe
         
@@ -112,301 +112,25 @@ def normalizar_dataset(dataset, minmax):
         for i in range(len(linha) - 1):
             linha[i] = (linha[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
 
-def rodar_rede(dataset, n_hid,taxa_apre,epocas):
-    minmax = minmax_data(dataset)
-    normalizar_dataset(dataset, minmax)
-    n_inp = len(dataset[0]) - 1
-    n_out = len(set([datarow[-1] for datarow in dataset]))
+def rodar_rede(datatreino, datavalid, n_hid,taxa_apre,epocas):
+    minmax = minmax_data(datatreino)
+    normalizar_dataset(datatreino, minmax)
+    n_inp = len(datatreino[0]) - 1
+    n_out = len(set([datarow[-1] for datarow in datatreino]))
     seed(1)
     rede = inicializar_rede(n_inp,n_hid,n_out)
-    treinar_rede(rede, dataset, taxa_apre, epocas, n_out)
+    treinar_rede(rede, datatreino, taxa_apre, epocas, n_out)
     for camada in rede:
         print(camada)
-    for datarow in dataset:
-        pred = predicao(rede, datarow)
-        print('ESPERADO = %d, OBTIDO = %d' % (datarow[-1], pred))
+    for datarow in datavalid:
+        valid = validacao(rede, datarow)
+        print('ESPERADO = %d, OBTIDO = %d' % (datarow[-1], valid))
     
-dataset = [[5, 3, 5, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 1, 5, 3, 1] ,
-            [5, 1, 4, 3, 1] ,
-            [3, 2, 1, 3, 1] ,
-            [4, 3, 1, 2, 0] ,
-            [4, 2, 1, 2, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [3, 3, 4, 3, 0] ,
-            [4, 2, 1, 3, 1] ,
-            [4, 1, 1, 3, 1] ,
-            [5, 4, 3, 1, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 2, 4, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 0] ,
-            [4, 1, 5, 2, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 1, 1, 2, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [5, 3, 4, 2, 1] ,
-            [4, 3, 4, 2, 0] ,
-            [4, 1, 1, 1, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 3, 5, 2, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 2, 1, 2, 0] ,
-            [5, 3, 5, 3, 1] ,
-            [4, 2, 1, 1, 0] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [4, 2, 5, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 2, 1, 2, 0] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 4, 5, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 1, 1, 2, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 3, 2, 1] ,
-            [5, 2, 4, 1, 0] ,
-            [4, 4, 5, 3, 0] ,
-            [5, 4, 4, 2, 1] ,
-            [3, 1, 1, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 1, 5, 3, 1] ,
-            [4, 3, 4, 3, 1] ,
-            [4, 4, 4, 3, 1] ,
-            [5, 2, 1, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 4, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 4, 4, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 4, 2, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 1, 2, 0] ,
-            [5, 3, 4, 3, 1] ,
-            [5, 4, 5, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 2, 1, 2, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 4, 3, 0] ,
-            [4, 4, 3, 2, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 4, 4, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 4, 4, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 3, 5, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 1, 1, 2, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 4, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 4, 4, 1] ,
-            [5, 4, 4, 4, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 4, 2, 0] ,
-            [3, 4, 4, 3, 0] ,
-            [4, 3, 4, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 3, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 1, 1, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 3, 5, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 4, 4, 3, 0] ,
-            [4, 4, 4, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 2, 1, 2, 0] ,
-            [5, 4, 5, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 4, 4, 3, 0] ,
-            [5, 4, 4, 4, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 1, 1, 2, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 3, 4, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 3, 1, 3, 0] ,
-            [4, 1, 1, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 3, 1, 2, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [3, 4, 4, 3, 0] ,
-            [4, 4, 5, 3, 1] ,
-            [2, 4, 4, 3, 0] ,
-            [4, 4, 5, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 2, 3, 3, 0] ,
-            [4, 4, 3, 3, 1] ,
-            [4, 1, 1, 1, 0] ,
-            [4, 3, 1, 3, 0] ,
-            [5, 2, 1, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 4, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [3, 2, 1, 3, 0] ,
-            [3, 2, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 2, 1, 3, 1] ,
-            [4, 3, 4, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [3, 4, 3, 3, 0] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [4, 3, 1, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 5, 3, 0] ,
-            [4, 4, 5, 3, 0] ,
-            [4, 4, 4, 3, 1] ,
-            [4, 2, 1, 2, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [3, 1, 1, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 2, 3, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [5, 1, 5, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [3, 1, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 4, 2, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 4, 4, 3, 1] ,
-            [5, 4, 2, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 4, 1, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [5, 4, 2, 3, 1] ,
-            [4, 4, 4, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [3, 4, 3, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 2, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [2, 1, 1, 2, 0] ,
-            [4, 4, 4, 3, 1] ,
-            [5, 3, 1, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [5, 1, 4, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 1, 2, 0] ,
-            [4, 1, 1, 3, 1] ,
-            [4, 4, 3, 3, 1] ,
-            [4, 4, 3, 3, 0] ,
-            [4, 4, 3, 3, 0] ,
-            [5, 4, 5, 4, 1] ,
-            [5, 3, 4, 4, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 3, 1, 2, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 4, 4, 3, 1] ,
-            [4, 2, 4, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 4, 4, 3, 0] ,
-            [4, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [3, 2, 1, 2, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 3, 1, 3, 0] ,
-            [2, 2, 1, 2, 0] ,
-            [4, 3, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 4, 5, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 4, 1, 3, 1] ,
-            [4, 4, 4, 3, 1] ,
-            [4, 4, 3, 3, 0] ,
-            [4, 2, 3, 3, 0] ,
-            [4, 4, 4, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 4, 4, 3, 1] ,
-            [4, 4, 2, 3, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 5, 2, 1] ,
-            [4, 1, 1, 2, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 2, 1, 2, 0] ,
-            [4, 1, 1, 2, 0] ,
-            [4, 4, 4, 3, 1] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 3, 5, 3, 1] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [4, 4, 4, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 4, 4, 3, 1] ,
-            [5, 4, 3, 3, 1] ,
-            [5, 1, 1, 3, 1] ,
-            [4, 1, 4, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 5, 3, 1] ,
-            [4, 4, 1, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [5, 4, 5, 3, 0] ,
-            [4, 1, 2, 3, 0] ,
-            [5, 2, 1, 3, 1] ,
-            [4, 3, 1, 3, 0] ,
-            [4, 1, 1, 3, 0] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 2, 1, 3, 0] ,
-            [4, 3, 1, 3, 1] ,
-            [5, 4, 4, 3, 1] ,
-            [4, 4, 4, 3, 1] ,
-            [5, 4, 4, 3, 1]]
+dataset = pd.read_csv('dadosmamografia.csv')
+dataset = dataset.values.tolist()
 
 n_hid = int(input('Numero de neuronios na camada escondida: '))
 taxa_apre = float(input('Taxa de aprendizado: '))
 epocas = int(input('Numero de epocas: '))
 
-rodar_rede(dataset[0:50], n_hid, taxa_apre, epocas)
+rodar_rede(dataset[0:10],dataset[0:10], n_hid, taxa_apre, epocas)

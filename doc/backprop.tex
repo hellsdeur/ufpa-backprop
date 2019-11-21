@@ -2,10 +2,14 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{listingsutf8}
 \usepackage{booktabs}
 \usepackage{listings}
 \usepackage{xcolor}
- 
+\usepackage{inconsolata}
+\usepackage{amsmath}
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -58,19 +62,49 @@
 \section{Backpropagation}
 
 \section{Implementação}
-A rede foi organizada em uma lista de três camadas, uma de entrada, uma escondida de e uma de saída, e cada camada é estruturada como um dicionário que, inicialmente, guarda os pesos sinápticos dos neurônios. Durante as fases de alimentação adiante e retropropagação, esse léxico recebe valores de saída da rede e de ajuste de pesos (regra delta).
+\qquad A rede foi organizada em uma lista de três camadas, uma de entrada, uma escondida de e uma de saída, e cada camada é estruturada como um dicionário que, inicialmente, guarda os pesos sinápticos dos neurônios. Durante as fases de alimentação adiante e retropropagação, esse léxico recebe valores de saída da rede e de ajuste de pesos (regra delta).
 
 \subsection{Inicializando pesos}
-Os pesos são valores aleatórios uniformemente distribuídos, entre 0 e 1. O número de entradas de cada neurônio da camada escondida é equivalente à quantidade de neurônios na camada de entrada mais um bias, assim como o número de entradas de cada neurônio da camada de saída é equivalente à quantidade de neurônios na camada de entrada mais um bias.
-\lstinputlisting[language=Python, firstline=4, lastline=17]{backpropagation.py}
+\lstinputlisting[language=Python, firstline=6, lastline=19]{../backpropagation.py}
+\qquad Os pesos são valores aleatórios uniformemente distribuídos, entre 0 e 1. O número de entradas de cada neurônio da camada escondida é equivalente à quantidade de neurônios na camada de entrada mais um bias na última posição, assim como o número de entradas de cada neurônio da camada de saída é equivalente à quantidade de neurônios na camada de entrada mais um bias.\\
 
 \subsection{Feedforward (Alimentação Adiante)}
+\lstinputlisting[language=Python, firstline=21, lastline=42]{../backpropagation.py}
+\qquad Na etapa de feedforward, definida na função \verb|def feedforward|, os sinais de entrada são propagados por toda a estrutura do neurônio. Assim que as entradas são passadas para a rede, é calculado campo local induzido, dado por 
+
+$$v_j(n) = \sum_{i=0}^{m}w_{ji}(n)\cdot y_i(n)$$
+
+\qquad Essa relação é definida em uma função \verb|def ativacao|. Para cada linha da entrada, o bias da camada é dado pelo último elemento da lista. Para as outras entradas, é efetuado o campo induzido, que é o valor retornado da função.
+
+\qquad Após calcular os campos $v_j(n)$ para uma camada, é gerada a saída $y_j(n) = \varphi_j(v_j(n))$ através da função de ativação, $\varphi_j$. Foi utilizada a função logística sigmóide, dada por
+
+$$ \varphi(v) = \dfrac{1}{1+e^{-v}}$$
+
+O valor de saída do neurônio é retornado da função \verb|def transferencia|. As entradas são direcionadas diretamente para a camada encondida, é gerada uma saída para essa camada. Essa mesma saída é direcionada para a camada de saída, que gera a saída final da rede.\\
 
 \subsection{Backpropagation (Retropropagação)}
+\lstinputlisting[language=Python, firstline=44, lastline=77]{../backpropagation.py}
+\qquad De posse da saída, serão calculados os erros em comparação com as saídas desejadas, com o objetivo de retropropagar os mesmos na rede e ajustar os pesos até que o erro seja suficientemente reduzido.
+
+\qquad Esse levantamento dos erros é feito de maneira reversa, onde são calculados inicialmente os erros da camada de saída. Na função \verb|def back_prop|, para cada neurônio na camada de saída, o erro é dado por $e^j(n) = d_j(n)-o_j(n)$, onde $d_j$ é a saída desejada e $o_j$ é a saída obtida.
+
+\qquad De posse dos erros para a camada de saída, obtemos o gradiente local para esses neurônios, ou seja, a direção para a mudança de pesos que reduza o erro. O gradiente local é expresso por $\delta(n) = e(n)\cdot  \varphi^{`}(v)$, onde $e(n)$ são os erros da camada e $\varphi^{`}(v) = \varphi(v)\cdot (1 - \varphi(v))$. Cada um dos gradientes é adicionado a uma lista de deltas ($\delta$), que é anexada ao dicionário da camada. Cada $\delta$ será utilizado para atualizar os pesos em breve.
+
+\qquad Para encontrar os deltas da camada escondida, basta encontrar o produto de $\varphi^{`}(v)$ pela soma ponderada dos $\delta$ da camada de saída. Assim, o gradiente local da camada escondida é dado por
+$$\delta(n) =\varphi^{`}(v) \cdot (\sum_k \delta_{k}^{saida}\cdot w_{k}^{saida})$$
+
+\qquad \verb|def atualiza_pesos| faz o ajuste dos pesos da rede, a partir dos valores obtidos durante a retropropagação. Esse ajuste é realizado pela regra delta, dada por $w = \nu \cdot \delta (n) \cdot y(n)$, onde $\nu$ é o parâmetro da taxa de aprendizagem e $\delta$ e $y$ são os deltas e valores de entrada de uma camada, respectivamente.\\
 
 \subsection{Treino}
+\lstinputlisting[language=Python, firstline=80, lastline=101]{../backpropagation.py}
+\qquad Uma época se refere ao processo ou ciclo completo de aprendizagem, desde a entrada dos dados no estágio de feedforward até a atualização dos pesos após o backpropagation. Assim a função \verb|def treinar_rede| fará todo o processo quantas vezes forem estipuladas por uma variável \verb|n_epoca|.
+
+\qquad Neste estágio também é gerador o Erro Quadrático Médio em relação as saídas desejadas e obtidas da rede. O MSE (Mean Squared Error) é dado por
+$$MSE = \sum_{n=1}^{N}(d_i(n)-y_i(n))^2$$
 
 \subsection{Validação}
+\lstinputlisting[language=Python, firstline=103, lastline=127]{../backpropagation.py}
+	Para usar os dados de validação, basta aplicá-los na sub-rotina de feedforward, já que os pesos já foram definidos durante a fase de treino.
 
 \section{Aplicação}
 \subsection{Escolha e tratamento do Dataset}

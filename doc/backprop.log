@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.3.26)  21 NOV 2019 04:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.3.26)  21 NOV 2019 05:22
 entering extended mode
 **./backprop.tex
 (backprop.tex
@@ -472,66 +472,78 @@ tim
 sty"
 File: lstlang1.sty 2019/09/10 1.8c listings language file
 )
-LaTeX Font Info:    Try loading font information for T1+zi4 on input line 68.
+LaTeX Font Info:    Try loading font information for T1+zi4 on input line 69.
 
 ("C:\Users\hmate\AppData\Local\Programs\MiKTeX 2.9\tex/latex/inconsolata\t1zi4.
 fd"
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 12.0pt on input line 68.
+(Font)              scaled to size 12.0pt on input line 69.
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.0pt on input line 68.
- (../backpropagation.py)
-Underfull \hbox (badness 10000) in paragraph at lines 69--70
+(Font)              scaled to size 10.0pt on input line 69.
+ (../backpropagation.py [2])
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
 
  []
 
-(../backpropagation.py [2])
-Underfull \hbox (badness 10000) in paragraph at lines 83--84
+(../backpropagation.py) [3]
+Underfull \hbox (badness 10000) in paragraph at lines 84--85
 
  []
 
-(../backpropagation.py [3]) [4]
-Underfull \hbox (badness 10000) in paragraph at lines 96--97
+(../backpropagation.py [4])
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
 
  []
 
-(../backpropagation.py) [5] (../backpropagation.py) [6] [7] (backprop.aux) ) 
+(../backpropagation.py [5]) (../backpropagation.py [6])
+Underfull \hbox (badness 10000) in paragraph at lines 108--111
+
+ []
+
+
+Overfull \hbox (84.27466pt too wide) in paragraph at lines 126--129
+\T1/zi4/m/n/12 https://machinelearningmastery.com/machine-learning-algorithms-f
+rom-scratch/ 
+ []
+
+[7] (backprop.aux) ) 
 Here is how much of TeX's memory you used:
- 5744 strings out of 492946
- 77375 string characters out of 3126266
- 491749 words of memory out of 3000000
- 9541 multiletter control sequences out of 15000+200000
- 17395 words of font info for 41 fonts, out of 3000000 for 9000
+ 5748 strings out of 492946
+ 77412 string characters out of 3126266
+ 482024 words of memory out of 3000000
+ 9544 multiletter control sequences out of 15000+200000
+ 18079 words of font info for 42 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,6n,74p,532b,1813s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:
-/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/inconsolata/i4-t
-1-0.enc} <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/d
-pi600\ecrm0600.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jkn
-appen/ec/dpi600\ecbx1440.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9
-\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\hmate\AppData\Local\
-MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\hmate\AppD
-ata\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\
-hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk> 
-<C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecb
-x2488.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/
-dpi600\eccc1728.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jk
-nappen/ec/dpi600\eccc2074.pk><C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><C:/Users/hmate/AppData/Loc
-al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hmat
-e/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
-C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmmi8.pfb><C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmr12.pfb><C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hmate/AppData/Local/Programs/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/hmate/AppData/Local/Pr
-ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on backprop.pdf (8 pages, 213035 bytes).
+ 36i,6n,74p,532b,1941s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/j
+knappen/ec/dpi600\ecti1200.pk>{C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9
+/fonts/enc/dvips/inconsolata/i4-t1-0.enc} <C:\Users\hmate\AppData\Local\MiKTeX\
+2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0600.pk> <C:\Users\hmate\AppData\Loc
+al\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\hmate\A
+ppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Use
+rs\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.p
+k> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\
+ecrm1440.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/
+ec/dpi600\ecrm1200.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour
+/jknappen/ec/dpi600\ecrm1728.pk> <C:\Users\hmate\AppData\Local\MiKTeX\2.9\fonts
+/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\hmate\AppData\Local\MiKTeX
+\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1728.pk> <C:\Users\hmate\AppData\Lo
+cal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc2074.pk><C:/Users/hmate/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/inconsolata/Inconsolata-zi4
+r.pfb><C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmex10.pfb><C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi12.pfb><C:/Users/hmate/AppData/Local/Programs/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/hmate/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/hmate/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hm
+ate/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+><C:/Users/hmate/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmsy8.pfb>
+Output written on backprop.pdf (8 pages, 209718 bytes).
 PDF statistics:
- 381 PDF objects out of 1000 (max. 8388607)
+ 375 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

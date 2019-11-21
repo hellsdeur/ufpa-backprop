@@ -111,10 +111,15 @@ def normalizar_dataset(dataset, minmax):
     for linha in dataset:
         for i in range(len(linha) - 1):
             linha[i] = (linha[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
+    return dataset
 
-def rodar_rede(datatreino, datavalid, n_hid,taxa_apre,epocas):
-    minmax = minmax_data(datatreino)
-    normalizar_dataset(datatreino, minmax)
+def rodar_rede(dataset, n_hid,taxa_apre,epocas):
+    minmax = minmax_data(dataset)
+    datatreino = normalizar_dataset(dataset, minmax)
+    datavalid = normalizar_dataset(dataset, minmax)
+    datatreino = dataset[0:10]
+    datavalid = dataset[10:20]
+    
     n_inp = len(datatreino[0]) - 1
     n_out = len(set([datarow[-1] for datarow in datatreino]))
     seed(1)
@@ -133,4 +138,4 @@ n_hid = int(input('Numero de neuronios na camada escondida: '))
 taxa_apre = float(input('Taxa de aprendizado: '))
 epocas = int(input('Numero de epocas: '))
 
-rodar_rede(dataset[0:10],dataset[0:10], n_hid, taxa_apre, epocas)
+rodar_rede(dataset, n_hid, taxa_apre, epocas)

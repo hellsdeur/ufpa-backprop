@@ -44,7 +44,7 @@
 	\vspace{1cm}
 	{\scshape\Large Redes Neurais Artificiais\par}
 	\vspace{1.5cm}
-	{\huge\bfseries Implementação e Aplicação de Algoritmo de Backpropagation\par}
+	{\huge\bfseries Implementação Algoritmo de Backpropagation\par}
 	\vspace{2cm}
 	{\Large Helder Mateus dos Reis Matos\par}
 	\vfill
@@ -54,12 +54,13 @@
 \end{titlepage}
 
 \tableofcontents
-
+\newpage
 \section{Introdução}
-
-\section{Estrutura de uma Rede Neural Artificial}
-
-\section{Backpropagation}
+\qquad O algoritmo de Backpropagation (retropropagação) é um dos mais utilizados principalmente por iniciantes, para criar redes neurais. Sua simplicidade e capacidade de encontrar soluções para problemas de ordem significante o tornam o principal ponto de partida para o estudo de aprendizadado de máquina.
+	
+\qquad O backpropagation pode ser dividido em duas etapas principais: feedfoward, onde o sinal de entrada da rede é propagado ao longo da mesma e fornece uma saída, e o de backpropagation, onde a saída é retro-alimentada na rede, de modo que os pesos sinápticos dos neurônios sejam ajustados de acordo com as interações de aprendizado.
+	
+\qquad Este trabalho tem o objetivo de fazer a implementação de uma Rede Neural Artificial com algoritmo de backpropagation em Python, fornecendo dados relativos ao erro da predição dos valores, assim como gráfico de evolução do erro ao longo do tempo, alterando parâmetros como a quantidade de neurônios na camada escondida, a taxa de aprendizado e a quantidade de passos de aprendizagem.
 
 \section{Implementação}
 \qquad A rede foi organizada em uma lista de três camadas, uma de entrada, uma escondida de e uma de saída, e cada camada é estruturada como um dicionário que, inicialmente, guarda os pesos sinápticos dos neurônios. Durante as fases de alimentação adiante e retropropagação, esse léxico recebe valores de saída da rede e de ajuste de pesos (regra delta).
@@ -104,17 +105,27 @@ $$MSE = \sum_{n=1}^{N}(d_i(n)-y_i(n))^2$$
 
 \subsection{Validação}
 \lstinputlisting[language=Python, firstline=103, lastline=127]{../backpropagation.py}
-	Para usar os dados de validação, basta aplicá-los na sub-rotina de feedforward, já que os pesos já foram definidos durante a fase de treino.
+	A função \verb|rodar_rede| é responsável por executar todas as outras sub-rotinas implementadas até então. Além de treinar a rede ela também toma os dados para validação e verifica se as saídas esperadas são equivalentes ao que o algoritmo tenta predizer.
+	Antes de começar o treino, os dados precisam passar por um processo de normalização, onde o dataset é distribuído em valores reais entre 0 e 1, através das funções \verb|def minmax_data| e \verb|def normalizar_dataset|.
+	Para usar os dados de validação, basta aplicá-los na sub-rotina de feedforward, já que os pesos já foram definidos durante a fase de treino.\\
 
-\section{Aplicação}
-\subsection{Escolha e tratamento do Dataset}
-\subsection{Aplicação na Rede Neural}
-\subsection{Análise dos Resultados}
-\subsubsection{Erro Médio Quadrático}
-\subsubsection{Saída Desejada $\times$ Saída Obtida}
-\subsubsection{Comparações para Diferentes Topologias}
 \section{Conclusão}
-\section{Referências}
-\section{Anexos}
+	A implementação desta rede possibilitou o realização de um planejamento para a criação do projeto, onde diversos fatores contribuiram significativamente para um bom desempenho do algoritmo. Interagir diretamente na arquitetura de uma rede desta configuração consolidou conhecimentos intrínsecos desse modelo e abre perspectivas de melhorias para o algoritmo, tais como a alteração de funções de ativação, acréscimo de camadas escondidas e uma otimização da inicialização dos pesos.
 
+\begin{thebibliography}{9}
+\bibitem{redes-neurais} 
+Symon Haykin.
+\textit{Redes Neurais: Princípios e prática}. 
+Bookman, 2001.
+ 
+\bibitem{prob} 
+William W. Hines, Douglas C. Montgomery, David M. Goldsman e Connie M. Borror. 
+\textit{Probabilidade e Estatística na Engenharia}.
+John Wiley \& Sons, 2003.
+ 
+\bibitem{ml} Jason Browlee.
+\textit{Machine Learning Algorithms From Scratch.}
+\\\texttt{https://machinelearningmastery.com/machine-learning-algorithms-from-scratch/}
+
+\end{thebibliography}
 \end{document}
